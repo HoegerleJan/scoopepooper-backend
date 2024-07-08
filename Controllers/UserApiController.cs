@@ -55,7 +55,7 @@ namespace scoopepooper_backend.Controllers
                 user.editkey = someNumber;
                 var userid = _userRepo.Create(user);
                 EntryModel entry = new EntryModel();
-                entry.id = userid;
+                entry.user_Id = userid;
                 _entryRepo.Create(entry);
                 return Ok(ResponseHandler.GetAppResponse(type, user.editkey));
 
