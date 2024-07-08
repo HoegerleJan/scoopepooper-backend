@@ -42,12 +42,13 @@ namespace scoopepooper_backend.Data
             }
         }
 
-        public void Create(UserModel model)
+        public int Create(UserModel model)
         {
             User dbTable = new User();
             dbTable.editkey = model.editkey;
-            _context.Users.Add(dbTable);
+            var obj = _context.Users.Add(dbTable);
             _context.SaveChanges();
+            return obj.Entity.id;
         }
     }
 }
