@@ -43,8 +43,8 @@ namespace scoopepooper_backend.Controllers
         }
 
         // GET api/<EntryApiController>/5
-        [HttpGet("{id}")]
-        [Route("api/[controller]/GetEntry")]
+        [HttpGet]
+        [Route("api/[controller]/GetEntry/{id}")]
         public IActionResult Get(int id)
         {
             ResponseType type = ResponseType.Success;
@@ -65,7 +65,7 @@ namespace scoopepooper_backend.Controllers
         }
 
         // PUT api/<EntryApiController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         [Route("api/[controller]/PutEntry")]
         public IActionResult Put(EntryModel entry, int editkey)
         {
@@ -87,8 +87,8 @@ namespace scoopepooper_backend.Controllers
         }
 
         // DELETE api/<EntryApiController>/5
-        [HttpDelete("{id}")]
-        [Route("api/[controller]/DeleteEntry")]
+        [HttpDelete]
+        [Route("api/[controller]/DeleteEntry/{id}")]
         public IActionResult Delete(int id, int editkey)
         {
             ResponseType type = ResponseType.Success;

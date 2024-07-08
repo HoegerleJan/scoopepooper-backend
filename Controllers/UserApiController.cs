@@ -69,8 +69,8 @@ namespace scoopepooper_backend.Controllers
         }
 
         // DELETE api/<UserApiController>/5
-        [HttpDelete("{id}")]
-        [Route("api/[controller]/DeleteUser")]
+        [HttpDelete]
+        [Route("api/[controller]/DeleteUser/{id}")]
         public IActionResult Delete(int id)
         {
             ResponseType type = ResponseType.Success;
