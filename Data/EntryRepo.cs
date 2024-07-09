@@ -18,7 +18,7 @@ namespace scoopepooper_backend.Data
             dataList.ForEach(row => response.Add(new EntryModel()
             {
                 id = row.id,
-                user_Id = row.User.id,
+                user_Id = row.Userid,
                 first_name = row.first_name,
                 last_name = row.last_name,
                 nickname = row.nickname,
