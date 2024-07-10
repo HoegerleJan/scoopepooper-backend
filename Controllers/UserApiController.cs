@@ -22,8 +22,12 @@ namespace scoopepooper_backend.Controllers
         // GET: api/<UserApiController>
         [HttpGet]
         [Route("api/[controller]/GetUsers")]
-        public IActionResult Get()
+        public IActionResult Get(int adminkey)
         {
+            if (adminkey != 1234) 
+            {
+                return Unauthorized();
+            }
             try
             {
                 IEnumerable<UserModel> data = _userRepo.GetAll();
