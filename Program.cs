@@ -19,6 +19,19 @@ namespace scoopepooper_backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin();
+                                      policy.AllowAnyMethod();
+                                      policy.AllowAnyHeader();
+                                  });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +42,10 @@ namespace scoopepooper_backend
             }
 
             app.UseHttpsRedirection();
+
+            
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
