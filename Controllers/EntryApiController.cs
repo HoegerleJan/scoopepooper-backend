@@ -25,20 +25,18 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/GetEntries")]
         public IActionResult Get()
         {
-            ResponseType type = ResponseType.Success;
             try
             {
                 IEnumerable<EntryModel> data = _entryRepo.GetAll();
                 if (!data.Any())
                 {
-                    type = ResponseType.NotFound;
+                    return NotFound();
                 }
-                return Ok(ResponseHandler.GetAppResponse(type, data));
+                return Ok(data);
             }
             catch (Exception ex)
             {
-                type = ResponseType.Failure;
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
             }
         }
 
@@ -47,20 +45,18 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/GetEntry/{id}")]
         public IActionResult Get(int id)
         {
-            ResponseType type = ResponseType.Success;
             try
             {
                 var data = _entryRepo.Get(id);
                 if (data == null)
                 {
-                    type = ResponseType.NotFound;
+                    return NotFound();
                 }
-                return Ok(ResponseHandler.GetAppResponse(type, data));
+                return Ok(data);
             }
             catch (Exception ex)
             {
-                type = ResponseType.Failure;
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
             }
         }
 
@@ -69,20 +65,18 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/PutEntry")]
         public IActionResult Put(EntryModel entry, int editkey)
         {
-            ResponseType type = ResponseType.Success;
             if(editkey != _userRepo.Get(entry.user_Id).editkey)
             {
-                Exception ex = new Exception();
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return NotFound();
             }
             try
             {
                 _entryRepo.Update(entry);
-                return Ok(ResponseHandler.GetAppResponse(type, entry));
+                return Ok(entry);
             }
             catch (Exception ex) 
             {
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
             }
         }
 
@@ -91,21 +85,19 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/DeleteEntry/{id}")]
         public IActionResult Delete(int id, int editkey)
         {
-            ResponseType type = ResponseType.Success;
             var entry = _entryRepo.Get(id);
             if (editkey != _userRepo.Get(entry.user_Id).editkey)
             {
-                Exception ex = new Exception();
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return NotFound();
             }
             try
-                {
+            {
                 _entryRepo.Delete(id);
-                return Ok(ResponseHandler.GetAppResponse(type, "Entry has been deleted."));
+                return Ok("Entry has been deleted");
             }
             catch (Exception ex)
             {
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
 
             }
         }

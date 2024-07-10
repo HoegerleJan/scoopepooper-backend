@@ -24,20 +24,18 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/GetUsers")]
         public IActionResult Get()
         {
-            ResponseType type = ResponseType.Success;
             try
             {
                 IEnumerable<UserModel> data = _userRepo.GetAll();
                 if (!data.Any())
                 {
-                    type = ResponseType.NotFound;
+                    return NotFound();
                 }
-                return Ok(ResponseHandler.GetAppResponse(type, data));
+                return Ok(data);
             }
             catch (Exception ex)
             {
-                type = ResponseType.Failure;
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
             }
         }
 
@@ -48,7 +46,6 @@ namespace scoopepooper_backend.Controllers
         {
             UserModel user = new UserModel();
             Random rand = new Random();
-            ResponseType type = ResponseType.Success;
             var someNumber = rand.Next(1000, 9999);
             try
             {
@@ -57,13 +54,12 @@ namespace scoopepooper_backend.Controllers
                 EntryModel entry = new EntryModel();
                 entry.user_Id = userid;
                 _entryRepo.Create(entry);
-                return Ok(ResponseHandler.GetAppResponse(type, user.editkey));
+                return Ok(user.editkey);
 
             }
             catch (Exception ex)
             {
-                type = ResponseType.Failure;
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
             }
 
         }
@@ -73,15 +69,14 @@ namespace scoopepooper_backend.Controllers
         [Route("api/[controller]/DeleteUser/{id}")]
         public IActionResult Delete(int id)
         {
-            ResponseType type = ResponseType.Success;
             try
             {
                 _userRepo.Delete(id);
-                return Ok(ResponseHandler.GetAppResponse(type, "User has been deleted."));
+                return Ok("User has been deleted.");
             }
             catch (Exception ex) 
             {
-                return BadRequest(ResponseHandler.GetExceptionResponse(ex));
+                return BadRequest(ex);
 
             }
         }
