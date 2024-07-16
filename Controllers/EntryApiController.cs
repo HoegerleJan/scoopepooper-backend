@@ -92,7 +92,9 @@ namespace scoopepooper_backend.Controllers
             }
             try
             {
+                var userid = entry.user_Id;
                 _entryRepo.Delete(id);
+                _userRepo.Delete(userid);
                 return Ok("Entry has been deleted");
             }
             catch (Exception ex)
